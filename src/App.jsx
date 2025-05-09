@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from 'react';
 import './App.css';
 import Loader from './Components/LandingPage/Loader';
-import Dashboard from './Components/Dashboard/Dashboard';
 import { Routes, Route } from 'react-router-dom';
 
 const AuthPage = lazy(() => import('./Components/LandingPage/AuthPage'));
+const Dashboard = lazy(() => import('./Components/Dashboard/Dashboard'));
 
 function App() {
   return (
