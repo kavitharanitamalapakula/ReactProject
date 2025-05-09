@@ -1,0 +1,62 @@
+
+/* Sidebar styles */
+.sidebar {
+    position: relative;
+    width: 60px;
+    background-color: #704264;
+    height: 100vh;
+    padding-top: 60px;
+    /* adjust if header exists */
+  }
+  
+  .sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar nav ul li {
+    position: relative;
+  }
+  
+  .sidebar nav ul li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    color: white;
+    text-decoration: none;
+    position: relative;
+  }
+  
+  .sidebar nav ul li a .icon {
+    font-size: 24px;
+  }
+  
+  /* Floating label styles */
+  .sidebar nav ul li a .label {
+    position: absolute;
+    top: 50%;
+    left: 70px;
+    /* Appears beside icon column */
+    transform: translateY(-50%);
+    background-color: #704264;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 999;
+  }
+  
+  /* Show label on hover */
+  .sidebar nav ul li a:hover .label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  .sidebar nav ul li a:hover {
+    background-color: #704264;
+  }
+  

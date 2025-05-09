@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4F1C51;
+    color: white;
+    padding: 10px 20px;
+  }
+  
+  .left-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .left-section h1 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+  
+  .logout-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-btn span {
+    margin-right: 5px;
+    font-size: 16px;
+  }
+  
