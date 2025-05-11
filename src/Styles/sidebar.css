@@ -1,62 +1,57 @@
-
-/* Sidebar styles */
+/* sidebar.css */
 .sidebar {
-    position: relative;
-    width: 60px;
-    background-color: #704264;
-    height: 100vh;
-    padding-top: 60px;
-    /* adjust if header exists */
+  width: 220px;
+  background-color: #2c3e50;
+  color: white;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0; /* Always visible on desktop */
+  transition: left 0.3s ease;
+  padding-top: 60px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav ul li {
+  margin: 12px 0;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar nav ul li a:hover {
+  background-color: #34495e;
+}
+
+.sidebar nav ul li a .icon {
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.sidebar nav ul li a .label {
+  font-size: 16px;
+}
+
+/* ------- Responsive: Small screens ------- */
+@media (max-width: 768px) {
+  .sidebar {
+    left: -220px; /* Hide sidebar by default on mobile */
   }
-  
-  .sidebar nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+
+  .sidebar.open {
+    left: 0; /* Slide in when open */
   }
-  
-  .sidebar nav ul li {
-    position: relative;
-  }
-  
-  .sidebar nav ul li a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    color: white;
-    text-decoration: none;
-    position: relative;
-  }
-  
-  .sidebar nav ul li a .icon {
-    font-size: 24px;
-  }
-  
-  /* Floating label styles */
-  .sidebar nav ul li a .label {
-    position: absolute;
-    top: 50%;
-    left: 70px;
-    /* Appears beside icon column */
-    transform: translateY(-50%);
-    background-color: #704264;
-    padding: 6px 12px;
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 999;
-  }
-  
-  /* Show label on hover */
-  .sidebar nav ul li a:hover .label {
-    opacity: 1;
-    transform: translateY(-50%) translateX(0);
-  }
-  
-  .sidebar nav ul li a:hover {
-    background-color: #704264;
-  }
-  
+}

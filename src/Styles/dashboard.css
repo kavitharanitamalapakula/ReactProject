@@ -1,53 +1,106 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+/* dashboard.css */
+.dashboard-container {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+  width: 100%;
+}
+
+.main-content.sidebar-open {
+  margin-left: 220px; /* Same width as sidebar */
+}
+
+/* Header styles */
+.header {
+  width: 100%;
+  height: 60px;
+  background-color: #34495e;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-btn span {
+  margin-right: 5px;
+}
+/* dashboard.css */
+.dashboard-container {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 220px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+  width: 100%;
+}
+
+.main-content.sidebar-open {
+  margin-left: 220px;
+}
+
+/* ------- Responsive: Small screens ------- */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4F1C51;
-    color: white;
-    padding: 10px 20px;
+
+  .main-content.sidebar-open {
+    margin-left: 220px;
   }
-  
-  .left-section {
-    display: flex;
-    align-items: center;
+}
+/* dashboard.css */
+.main-content {
+  margin-left: 220px;
+  padding: 80px 20px 20px 20px; /* TOP padding = 60px (header) + 20px spacing */
+  transition: margin-left 0.3s ease;
+  width: 100%;
+}
+
+/* Small screen (no sidebar shift) */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
   }
-  
-  .logo {
-    height: 40px;
-    margin-right: 10px;
+
+  .main-content.sidebar-open {
+    margin-left: 220px;
   }
-  
-  .left-section h1 {
-    margin: 0;
-    font-size: 20px;
-  }
-  
-  .menu-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    margin-left: 15px;
-    cursor: pointer;
-  }
-  
-  .logout-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-  
-  .logout-btn span {
-    margin-right: 5px;
-    font-size: 16px;
-  }
-  
+}

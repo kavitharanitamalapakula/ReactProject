@@ -1,9 +1,9 @@
-import React from 'react';
 import { FaHome, FaVideo, FaUserCircle } from 'react-icons/fa';
-import "../../Styles/sidebar.css"
-const Sidebar = () => {
+import '../../Styles/sidebar.css';
+
+const Sidebar = ({ isOpen }) => {
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <nav>
         <ul>
           <li>

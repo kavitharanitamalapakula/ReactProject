@@ -1,15 +1,14 @@
-
 import React, { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Home from './Home';
-import "../../Styles/dashboard.css"
+import '../../Styles/dashboard.css';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setIsSidebarOpen(prev => !prev);
   };
 
   return (

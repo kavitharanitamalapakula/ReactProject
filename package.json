@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@videosdk.live/js-sdk": "^0.2.5",
+    "@videosdk.live/react-sdk": "^0.3.4",
     "bootstrap": "^5.3.5",
     "lucide-react": "^0.507.0",
     "react": "^19.1.0",

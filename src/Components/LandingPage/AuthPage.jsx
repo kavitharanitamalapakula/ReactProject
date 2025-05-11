@@ -193,7 +193,7 @@ const AuthPage = () => {
                         <form onSubmit={handleSubmit}>
                             {!isLogin && (
                                 <div className="form-group">
-                                    <label className="form-label" htmlFor="username">Full Name <span style={{ color: "red" }}>*</span></label>
+                                    <label className="form-label" htmlFor="username">Full Name<sup style={{ color: "red" }}>*</sup> </label>
                                     <input
                                         id='username'
                                         type="text"
@@ -208,7 +208,7 @@ const AuthPage = () => {
                             )}
 
                             <div className="form-group">
-                                <label className="form-label" htmlFor="email">Email address <span style={{ color: "red" }}>*</span></label>
+                                <label className="form-label" htmlFor="email">Email address<sup style={{ color: "red" }}>*</sup></label>
                                 <input
                                     id='email'
                                     type="email"
@@ -222,7 +222,7 @@ const AuthPage = () => {
                             </div>
 
                             <div className="form-group">
-                                <label className="form-label" htmlFor="password">Password <span style={{ color: "red" }}>*</span></label>
+                                <label className="form-label" htmlFor="password">Password<sup style={{ color: "red" }}>*</sup></label>
                                 <input
                                     id='password'
                                     type="password"
@@ -237,7 +237,7 @@ const AuthPage = () => {
 
                             {!isLogin && (
                                 <div className="form-group">
-                                    <label className="form-label" htmlFor="confirmPassword">Confirm Password <span style={{ color: "red" }}>*</span></label>
+                                    <label className="form-label" htmlFor="confirmPassword">Confirm Password<sup style={{ color: "red" }}>*</sup></label>
                                     <input
                                         id='confirmPassword'
                                         type="password"
@@ -283,8 +283,7 @@ const AuthPage = () => {
 
                     </div>
                 </div>
-
-            </div> {/* End of auth-subContainer */}
+            </div>
         </div>
 
     );
