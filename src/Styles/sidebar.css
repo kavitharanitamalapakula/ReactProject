@@ -1,6 +1,6 @@
 /* sidebar.css */
 .sidebar {
-  width: 220px;
+  width: 200px;
   background-color: #2c3e50;
   color: white;
   height: 100vh;
@@ -14,7 +14,7 @@
 
 .sidebar nav ul {
   list-style: none;
-  padding: 0;
+  padding: 1rem;
   margin: 0;
 }
 
@@ -27,7 +27,7 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 20px 20px;
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
@@ -35,7 +35,10 @@
 .sidebar nav ul li a:hover {
   background-color: #34495e;
 }
-
+.menu-item .icon {
+  font-size: 20px;
+  margin-right: 12px; /* adjust this value to increase/decrease space */
+}
 .sidebar nav ul li a .icon {
   margin-right: 12px;
   font-size: 18px;

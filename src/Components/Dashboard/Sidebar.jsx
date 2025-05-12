@@ -1,28 +1,28 @@
 import { FaHome, FaVideo, FaUserCircle } from 'react-icons/fa';
 import '../../Styles/sidebar.css';
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, onMenuSelect }) => {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <nav>
         <ul>
-          <li>
-            <a href="#">
+          <li onClick={() => onMenuSelect('home')}>
+            <div className="menu-item" style={{cursor: "pointer"}}>
               <FaHome className="icon" />
               <span className="label">Home</span>
-            </a>
+            </div>
           </li>
-          <li>
-            <a href="#">
+          <li onClick={() => onMenuSelect('meeting')}>
+            <div className="menu-item" style={{cursor: "pointer"}}>
               <FaVideo className="icon" />
               <span className="label">Meetings</span>
-            </a>
+            </div>
           </li>
-          <li>
-            <a href="#">
+          <li onClick={() => onMenuSelect('profile')}>
+            <div className="menu-item" style={{cursor: "pointer"}}>
               <FaUserCircle className="icon" />
               <span className="label">Profile</span>
-            </a>
+            </div>
           </li>
         </ul>
       </nav>

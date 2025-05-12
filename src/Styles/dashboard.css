@@ -4,14 +4,31 @@
 }
 
 .main-content {
-  margin-left: 0;
+  margin-left: 220px;
+  padding: 80px 20px 20px 20px; 
   transition: margin-left 0.3s ease;
-  padding: 20px;
   width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
 }
 
 .main-content.sidebar-open {
-  margin-left: 220px; /* Same width as sidebar */
+  margin-left: 220px;
+}
+
+/* ------- Responsive: Small screens ------- */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .main-content.sidebar-open {
+    margin-left: 220px;
+  }
 }
 
 /* Header styles */
@@ -59,48 +76,4 @@
 
 .logout-btn span {
   margin-right: 5px;
-}
-/* dashboard.css */
-.dashboard-container {
-  display: flex;
-}
-
-.main-content {
-  margin-left: 220px;
-  transition: margin-left 0.3s ease;
-  padding: 20px;
-  width: 100%;
-}
-
-.main-content.sidebar-open {
-  margin-left: 220px;
-}
-
-/* ------- Responsive: Small screens ------- */
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-  }
-
-  .main-content.sidebar-open {
-    margin-left: 220px;
-  }
-}
-/* dashboard.css */
-.main-content {
-  margin-left: 220px;
-  padding: 80px 20px 20px 20px; /* TOP padding = 60px (header) + 20px spacing */
-  transition: margin-left 0.3s ease;
-  width: 100%;
-}
-
-/* Small screen (no sidebar shift) */
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-  }
-
-  .main-content.sidebar-open {
-    margin-left: 220px;
-  }
 }

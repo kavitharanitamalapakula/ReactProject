@@ -1,4 +1,3 @@
-import React from 'react';
 import Carousel from './Carousel';
 import NewMeetingPanel from './NewMeetingPanel';
 import "../../Styles/home.css"
