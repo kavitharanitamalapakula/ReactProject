@@ -57,6 +57,30 @@ function NewMeetingPanel({ onMeetingAdd }) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const startInstantMeeting = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/meetingRoom/instant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'Instant Meeting' }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("data")
+        throw new Error(errorData.message || 'Failed to create room');
+      }
+
+      const data = await response.json();
+      if (!data.roomId) throw new Error('Failed to create room');
+
+      window.open(`/meeting/${data.roomId}`, '_blank');
+    } catch (err) {
+      console.error(err);
+      alert(`Failed to start meeting: ${err.message}`);
+    }
+  };
+
   const handleSubmit = async () => {
     if (validateForm()) {
       const meetingData = { ...formData, datetime: formData.datetime.toISOString() };
@@ -110,7 +134,7 @@ function NewMeetingPanel({ onMeetingAdd }) {
             <Link size={18} className="icon" />
             Create a meeting for later
           </button>
-          <button className="popup-option">
+          <button className="popup-option" onClick={startInstantMeeting}>
             <Plus size={18} className="icon" />
             Start an instant meeting
           </button>
