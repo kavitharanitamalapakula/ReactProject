@@ -27,7 +27,7 @@
 
 /* Form Section */
 .auth-form-section {
-    flex: 1; /* slightly larger */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import "../../Styles/carousel.css";
 
 const carouselItems = [
     {
@@ -21,57 +22,24 @@ const carouselItems = [
 function Carousel() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const next = () => setCurrentIndex((currentIndex + 1) % carouselItems.length);
-    const prev = () => setCurrentIndex((currentIndex - 1 + carouselItems.length) % carouselItems.length);
+    const next = () => setCurrentIndex((prev) => (prev + 1) % carouselItems.length);
+    const prev = () => setCurrentIndex((prev) => (prev - 1 + carouselItems.length) % carouselItems.length);
 
     useEffect(() => {
         const interval = setInterval(() => {
             next();
-        }, 5000); 
+        }, 5000);
 
         return () => clearInterval(interval);
-    }, [currentIndex]);
-
-    const { title, description, image } = carouselItems[currentIndex];
+    }, []);
 
     return (
-        <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
-            <div className="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <div className="custom-carousel">
+            <div className="carousel-inner d-flex justify-content-center align-items-center flex-column text-center">
+                <img src={carouselItems[currentIndex].image} className="carousel-image mb-3" alt="carousel" />
+                <h5>{carouselItems[currentIndex].title}</h5>
+                <p>{carouselItems[currentIndex].description}</p>
             </div>
-            <div className="carousel-inner ">
-                <div className="carousel-item active d-flex justify-content-center">
-                    <img src={image} className="d-block w-75" alt="..." />
-                    <div className="carousel-caption d-none d-md-block text-dark">
-                        <h5>{title}</h5>
-                        <p>{description}</p>
-                    </div>
-                </div>
-                <div className="carousel-item">
-                    <img src={image} className="d-block w-100" alt="..." />
-                    <div className="carousel-caption d-none d-md-block text-dark">
-                        <h5>{title}</h5>
-                        <p>{description}</p>
-                    </div>
-                </div>
-                <div className="carousel-item">
-                    <img src={image} className="d-block w-100" alt="..." />
-                    <div className="carousel-caption d-none d-md-block text-dark">
-                        <h5>{title}</h5>
-                        <p>{description}</p>
-                    </div>
-                </div>
-            </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-            </button>
         </div>
     );
 }

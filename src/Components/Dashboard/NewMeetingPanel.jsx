@@ -14,7 +14,7 @@ function NewMeetingPanel({ onMeetingAdd }) {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ title: '', description: '', datetime: null });
   const [errors, setErrors] = useState({});
-  const [showConfirmation, setShowConfirmation] = useState(false); // State for success popup
+  const [showConfirmation, setShowConfirmation] = useState(false); 
   const panelRef = useRef(null);
   const navigate = useNavigate()
 
@@ -56,6 +56,17 @@ function NewMeetingPanel({ onMeetingAdd }) {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const [roomIdInput, setRoomIdInput] = useState('');
+
+  const handleJoin = () => {
+    const trimmedId = roomIdInput.trim();
+    if (trimmedId) {
+      navigate(`/meeting/${trimmedId}`);
+    } else {
+      alert('Please enter a valid Room ID');
+    }
   };
 
   const startInstantMeeting = async () => {
@@ -118,7 +129,18 @@ function NewMeetingPanel({ onMeetingAdd }) {
         <FaVideo className="icon me-3" />
         <span>New Meeting</span>
       </button>
-
+      <div className="join-room-form mt-3">
+        <input
+          type="text"
+          className="form-control mb-2"
+          placeholder="Enter Room ID"
+          value={roomIdInput}
+          onChange={(e) => setRoomIdInput(e.target.value)}
+        />
+        <button className="btn btn-primary w-50" onClick={handleJoin}>
+          Join
+        </button>
+      </div>
       {showOptions && (
         <div ref={panelRef} className="popup-panel">
           <button className="popup-option">

@@ -22,9 +22,6 @@ const Dashboard = () => {
   const handleMeetingAdd = (meeting) => {
     setMeetings(prevMeetings => [...prevMeetings, meeting]);
   };
-
- 
-  // Filter ongoing meetings (date/time in the future)
   const now = new Date();
   const ongoingMeetings = meetings.filter(meeting => new Date(meeting.datetime) > now);
 
