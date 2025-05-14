@@ -1,0 +1,88 @@
+.meeting-schedule {
+  padding: 2rem;
+}
+
+.meeting-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.meeting-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  margin: 0;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.datetime {
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.not-active {
+  color: #c0392b;
+}
+
+.description {
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.card-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.start-btn,
+.copy-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.start-btn {
+  background-color: #14532d;
+  color: white;
+}
+
+.copy-btn {
+  background-color: #f1f5f9;
+  color: #14532d;
+}

@@ -1,7 +1,7 @@
-import { FaHome, FaVideo, FaUserCircle } from 'react-icons/fa';
+import { FaHome, FaVideo, FaUserCircle, FaVideoSlash } from 'react-icons/fa';
 import '../../Styles/sidebar.css';
 
-const Sidebar = ({ isOpen, onMenuSelect }) => {
+const Sidebar = ({ isOpen, onMenuSelect, }) => {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <nav>

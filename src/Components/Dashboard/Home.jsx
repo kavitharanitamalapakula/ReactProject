@@ -1,10 +1,10 @@
 import Carousel from './Carousel';
-import NewMeetingPanel from './NewMeetingPanel';
 import "../../Styles/home.css"
-const Home = () => (
+import NewMeetingPanel from './NewMeetingPanel';
+const Home = ({ onMeetingAdd }) => (
   <main className="content">
     <div className="new-meeting-panel">
-      <NewMeetingPanel />
+      <NewMeetingPanel onMeetingAdd={onMeetingAdd}/>
     </div>
     <div className="carousel">
       <Carousel />
