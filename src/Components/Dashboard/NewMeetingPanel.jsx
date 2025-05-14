@@ -5,6 +5,7 @@ import { FaVideo } from 'react-icons/fa';
 import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom';
 
 const Base_Url = "http://localhost:5000/api/meetings";
 
@@ -15,6 +16,7 @@ function NewMeetingPanel({ onMeetingAdd }) {
   const [errors, setErrors] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false); // State for success popup
   const panelRef = useRef(null);
+  const navigate = useNavigate()
 
   const toggleOptions = () => setShowOptions(!showOptions);
   const openModal = () => {
@@ -22,7 +24,6 @@ function NewMeetingPanel({ onMeetingAdd }) {
     setShowModal(true);
   };
 
-  // Close popup if clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (panelRef.current && !panelRef.current.contains(event.target)) {
@@ -67,14 +68,13 @@ function NewMeetingPanel({ onMeetingAdd }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log("data")
         throw new Error(errorData.message || 'Failed to create room');
       }
 
       const data = await response.json();
       if (!data.roomId) throw new Error('Failed to create room');
 
-      window.open(`/meeting/${data.roomId}`, '_blank');
+      navigate(`/meeting/${data.roomId}`);
     } catch (err) {
       console.error(err);
       alert(`Failed to start meeting: ${err.message}`);
@@ -97,25 +97,16 @@ function NewMeetingPanel({ onMeetingAdd }) {
         if (!response.ok) {
           throw new Error('Failed to save the meeting');
         }
-
-        // Notify parent component that a new meeting has been added
         onMeetingAdd(meetingData);
-
-        // Clear the form and close the modal
         setFormData({ title: '', description: '', datetime: null });
         setShowModal(false);
-
-        // Show confirmation popup for 3 seconds
         setShowConfirmation(true);
-        setTimeout(() => setShowConfirmation(false), 3000); // Hide after 3 seconds
-
+        setTimeout(() => setShowConfirmation(false), 3000);
       } catch (error) {
-        // Handle error here
         console.error('Error saving meeting:', error.message);
       }
     }
   };
-
   return (
     <div className="new-meeting-panel">
       <h3 className="title">Video Calls and meetings for everyone</h3>
@@ -207,10 +198,31 @@ function NewMeetingPanel({ onMeetingAdd }) {
 
       {/* Success Popup Toast */}
       {showConfirmation && (
-        <Toast onClose={() => setShowConfirmation(false)} show={showConfirmation} delay={3000} autohide>
-          <Toast.Body>Your meeting has been scheduled!</Toast.Body>
-        </Toast>
+        <div
+          aria-live="polite"
+          aria-atomic="true"
+          style={{
+            backgroundColor: "rgb(183, 219, 255)",
+            color: "black",
+            position: 'fixed',
+            top: 20,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 9999,
+            transition: 'transform 0.3s ease-out',
+          }}
+        >
+          <Toast
+            onClose={() => setShowConfirmation(false)}
+            show={showConfirmation}
+            delay={3000}
+            autohide
+          >
+            <Toast.Body>Your meeting has been scheduled!</Toast.Body>
+          </Toast>
+        </div>
       )}
+
     </div>
   );
 }
