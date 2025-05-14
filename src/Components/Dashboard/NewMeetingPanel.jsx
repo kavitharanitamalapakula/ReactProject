@@ -1,22 +1,27 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, Plus, Calendar } from 'lucide-react';
-import '../../Styles/newmeetingpanel.css'; // Import the CSS file
+import '../../Styles/newmeetingpanel.css';
 import { FaVideo } from 'react-icons/fa';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css';
+
+const Base_Url = "http://localhost:5000/api/meetings";
 
 function NewMeetingPanel({ onMeetingAdd }) {
   const [showOptions, setShowOptions] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ title: '', description: '', datetime: null });
   const [errors, setErrors] = useState({});
+  const [showConfirmation, setShowConfirmation] = useState(false); // State for success popup
   const panelRef = useRef(null);
+
   const toggleOptions = () => setShowOptions(!showOptions);
   const openModal = () => {
     setShowOptions(false);
     setShowModal(true);
   };
+
   // Close popup if clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -52,11 +57,38 @@ function NewMeetingPanel({ onMeetingAdd }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateForm()) {
-      onMeetingAdd({ ...formData, datetime: formData.datetime.toISOString() }); // Pass ISO string
-      setFormData({ title: '', description: '', datetime: null });
-      setShowModal(false);
+      const meetingData = { ...formData, datetime: formData.datetime.toISOString() };
+
+      try {
+        const response = await fetch(Base_Url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(meetingData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save the meeting');
+        }
+
+        // Notify parent component that a new meeting has been added
+        onMeetingAdd(meetingData);
+
+        // Clear the form and close the modal
+        setFormData({ title: '', description: '', datetime: null });
+        setShowModal(false);
+
+        // Show confirmation popup for 3 seconds
+        setShowConfirmation(true);
+        setTimeout(() => setShowConfirmation(false), 3000); // Hide after 3 seconds
+
+      } catch (error) {
+        // Handle error here
+        console.error('Error saving meeting:', error.message);
+      }
     }
   };
 
@@ -148,7 +180,15 @@ function NewMeetingPanel({ onMeetingAdd }) {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Success Popup Toast */}
+      {showConfirmation && (
+        <Toast onClose={() => setShowConfirmation(false)} show={showConfirmation} delay={3000} autohide>
+          <Toast.Body>Your meeting has been scheduled!</Toast.Body>
+        </Toast>
+      )}
     </div>
   );
 }
+
 export default NewMeetingPanel;

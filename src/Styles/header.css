@@ -1,5 +1,5 @@
 /* header.css */
-.header {
+/* .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,7 +12,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-}
+} */
 
 .menu-btn {
   background: none;

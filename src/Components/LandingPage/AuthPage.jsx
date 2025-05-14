@@ -3,7 +3,7 @@ import transparent from '../../assets/Transparent.png';
 import "../../Styles/authpage.css";
 import { useNavigate } from 'react-router-dom';
 
-const URL = "http://localhost:5000/api";
+const URL = "http://localhost:5000/api/users";
 
 const AuthPage = () => {
     const navigate = useNavigate();
@@ -154,7 +154,6 @@ const AuthPage = () => {
             }
 
         } catch (err) {
-            console.error(err);
             setError(err.message || "Something went wrong");
         } finally {
             setIsLoading(false);
