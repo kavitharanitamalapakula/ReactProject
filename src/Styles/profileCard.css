@@ -65,6 +65,10 @@
   font-size: 15px;
 }
 
+.profile-details a {
+  color: black;
+}
+
 .profile-details strong {
   margin-right: 6px;
 }
@@ -75,7 +79,7 @@
   border: none;
   cursor: pointer;
   margin-left: 6px;
-  color: #007bff;
+  /* color: #007bff; */
 }
 
 .inline-btn:hover {

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { FaPlay, FaCopy, FaEllipsisV, FaTimesCircle } from 'react-icons/fa';
 import '../../Styles/MeetingSchedule.css';
 import { getMeetings } from '../../api/meetings';
-
+import meetingLogo from "../../assets/meeting.png"
 const MeetingSchedule = () => {
   const [meetings, setMeetings] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const getMeetingStatus = (datetime) => {
@@ -46,11 +46,14 @@ const MeetingSchedule = () => {
 
   return (
     <div className="meeting-schedule">
-      <h2>Meetings</h2>
       {meetings.length === 0 ? (
-        <p>No meetings scheduled.</p>
+        <div style={{ display: "flex", justifyContent: "center", flexDirection: "column",alignItems:"center" }}>
+          <img src={meetingLogo} alt="MeetingLogo" width={"80%"} height={"20%"} />
+          <h4 >No meetings scheduled.</h4>
+        </div>
       ) : (
         <div className="meeting-list">
+          <h2>Meeting Scheduled</h2>
           {meetings.map((meeting) => (
             <div key={meeting.id || meeting._id} className="meeting-card">
               <div className="card-header">

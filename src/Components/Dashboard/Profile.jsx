@@ -29,10 +29,10 @@ function Profile() {
     }
   }
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("userInfo");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      const id = parsedUser._id || parsedUser.id;
+      const id = parsedUser.user._id || parsedUser.user.id;
       if (!id) {
         setError("User ID is missing");
         setLoading(false);
@@ -83,26 +83,32 @@ function Profile() {
     }
   };
 
+  const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/di6hzb7ik/upload";
+  const UPLOAD_PRESET = "MeetUpNow";
+
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       setAvatarPreview(URL.createObjectURL(file));
       try {
-        const formData = new FormData();
-        formData.append("file", file);
+        const cloudinaryData = new FormData();
+        cloudinaryData.append("file", file);
+        cloudinaryData.append("upload_preset", UPLOAD_PRESET);
 
-        const uploadRes = await fetch(`${BASE_URL}/upload`, {
+        // Upload to Cloudinary
+        const cloudinaryRes = await fetch(CLOUDINARY_URL, {
           method: "POST",
-          body: formData,
+          body: cloudinaryData,
         });
 
-        if (!uploadRes.ok) {
-          throw new Error("Image upload failed");
+        if (!cloudinaryRes.ok) {
+          throw new Error("Cloudinary upload failed");
         }
 
-        const uploadData = await uploadRes.json();
-        const imageUrl = uploadData.url;
+        const cloudinaryResult = await cloudinaryRes.json();
+        const imageUrl = cloudinaryResult.secure_url;  // this is the URL to store
 
+        // Now update the user's avatar URL in your backend
         const res = await fetch(`${BASE_URL}/profile/${user._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -181,9 +187,9 @@ function Profile() {
         ) : isLink ? (
           <>
             {isDefaultLink || !value ? (
-              "Not provided"
+              ""
             ) : (
-              <a href={value} target="_blank" rel="noopener noreferrer">
+              <a href={value} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", textDecorationColor: "black" }}>
                 {value}
               </a>
             )}
@@ -193,7 +199,7 @@ function Profile() {
           </>
         ) : (
           <>
-            {value || "Not provided"}
+            {value || ""}
             <button onClick={() => setEditingField(fieldName)} className="inline-btn">
               <Edit size={16} />
             </button>
@@ -206,22 +212,44 @@ function Profile() {
   if (loading) return <div className="profile-container">Loading...</div>;
   if (error) return <div className="profile-container error-text">{error}</div>;
   if (!user) return <div className="profile-container">User not found</div>;
-
+  console.log("state", avatarPreview)
+  console.log("obj", user.avatar)
   return (
     <div className="profile-container">
       <div className="profile-header">
         <div className="avatar-upload-wrapper">
-          <label className="upload-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <Upload size={16} />
-          </label>
-          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="profile-avatar-wrapper">
+            <img
+              src={avatarPreview || user.avatar || "https://via.placeholder.com/120"}
+              alt="Profile"
+              className="profile-avatar"
+            />
+            <label
+              className="upload-icon"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              <Upload size={16} />
+            </label>
+          </div>
+          <h2 className="profile-name">{user.username}</h2>
+
+          <div
+            className="modal fade"
+            id="exampleModal"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
             <div className="modal-dialog">
               <div className="modal-content">
-                <div className="modal-body">
-                  Upload Profile Picture
-                </div>
+                <div className="modal-body">Upload Profile Picture</div>
                 <input ref={inputRef} type="file" onChange={handleImage} />
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
                   Close
                 </button>
                 <button
@@ -232,7 +260,9 @@ function Profile() {
                     if (file) {
                       const e = { target: { files: [file] } };
                       await handleAvatarChange(e);
-                      document.querySelector("#exampleModal .btn.btn-secondary")?.click();
+                      document
+                        .querySelector("#exampleModal .btn.btn-secondary")
+                        ?.click();
                     } else {
                       alert("No file selected.");
                     }
@@ -243,15 +273,7 @@ function Profile() {
               </div>
             </div>
           </div>
-          <img
-            src={avatarPreview || user.avatar || "https://via.placeholder.com/120"}
-            alt="Profile"
-            className="profile-avatar"
-          />
-          <h2 className="profile-name">{user.username}</h2>
-          <p className="profile-email">{user.email}</p>
         </div>
-
         <div className="profile-details">
           {renderField("Phone", "phone", <Phone size={16} />)}
           {renderField("LinkedIn", "linkedin", <Linkedin size={16} />, true)}
