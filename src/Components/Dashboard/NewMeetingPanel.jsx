@@ -6,6 +6,7 @@ import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
+import { fetchWithToken } from '../../utils/fetchWithToken';
 
 const Base_Url = "http://localhost:5000/api/meetings";
 
@@ -97,18 +98,12 @@ function NewMeetingPanel({ onMeetingAdd }) {
       const meetingData = { ...formData, datetime: formData.datetime.toISOString() };
 
       try {
-        const response = await fetch(Base_Url, {
+        const savedMeeting = await fetchWithToken(Base_Url, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify(meetingData),
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to save the meeting');
-        }
-        onMeetingAdd(meetingData);
+        onMeetingAdd(savedMeeting);
         setFormData({ title: '', description: '', datetime: null });
         setShowModal(false);
         setShowConfirmation(true);
@@ -143,7 +138,7 @@ function NewMeetingPanel({ onMeetingAdd }) {
       </div>
       {showOptions && (
         <div ref={panelRef} className="popup-panel">
-          <button className="popup-option">
+          <button className="popup-option" onClick={openModal}>
             <Link size={18} className="icon" />
             Create a meeting for later
           </button>

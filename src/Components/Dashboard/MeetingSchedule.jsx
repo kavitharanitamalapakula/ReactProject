@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlay, FaCopy, FaEllipsisV, FaTimesCircle } from 'react-icons/fa';
 import '../../Styles/MeetingSchedule.css';
-
-const Base_Url = "http://localhost:5000/api/meetings";
+import { getMeetings } from '../../api/meetings';
 
 const MeetingSchedule = () => {
   const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
+
   const getMeetingStatus = (datetime) => {
     const now = new Date();
     const start = new Date(datetime);
@@ -24,15 +24,11 @@ const MeetingSchedule = () => {
     if (status === "Ongoing") return <FaPlay />;
     return <FaTimesCircle />;
   };
+
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
-        const response = await fetch(Base_Url);
-        if (!response.ok) {
-          throw new Error('Failed to fetch meetings');
-        }
-
-        const data = await response.json();
+        const data = await getMeetings();
         setMeetings(data);
       } catch (err) {
         console.error(err.message);
@@ -55,11 +51,11 @@ const MeetingSchedule = () => {
         <p>No meetings scheduled.</p>
       ) : (
         <div className="meeting-list">
-          {meetings.map((meeting, index) => (
-            <div key={index} className="meeting-card">
+          {meetings.map((meeting) => (
+            <div key={meeting.id || meeting._id} className="meeting-card">
               <div className="card-header">
                 <h3>{meeting.title}</h3>
-                <button className="menu-btn">
+                <button className="menu-btn" disabled>
                   <FaEllipsisV />
                 </button>
               </div>
@@ -71,10 +67,10 @@ const MeetingSchedule = () => {
               </p>
               <p className="description">{meeting.description}</p>
               <div className="card-actions">
-                <button className="start-btn">
+                <button className="start-btn" disabled>
                   <FaPlay /> Start
                 </button>
-                <button className="copy-btn">
+                <button className="copy-btn" disabled>
                   <FaCopy /> Copy Link
                 </button>
               </div>

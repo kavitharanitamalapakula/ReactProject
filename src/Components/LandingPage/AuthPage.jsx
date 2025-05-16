@@ -146,7 +146,7 @@ const AuthPage = () => {
             }
 
             if (isLogin) {
-                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("userInfo", JSON.stringify(data));
                 navigate("/dashboard");
             } else {
                 toggleForm();
@@ -202,6 +202,7 @@ const AuthPage = () => {
                                         onChange={handleChange}
                                         onBlur={(e) => validateField('username', e.target.value)}
                                     />
+                                    
                                     {formErrors.username && <p className="error-text">{formErrors.username}</p>}
                                 </div>
                             )}

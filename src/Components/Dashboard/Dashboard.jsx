@@ -3,7 +3,7 @@ import Sidebar from './Sidebar';
 import Home from './Home';
 import '../../Styles/dashboard.css';
 import ProfileCard from './Profile';
-import MeetingShedule from './MeetingShedule';
+import MeetingSchedule from './MeetingSchedule';
 import Header from './Header';
 
 const Dashboard = () => {
@@ -23,7 +23,11 @@ const Dashboard = () => {
     setMeetings(prevMeetings => [...prevMeetings, meeting]);
   };
   const now = new Date();
-  const ongoingMeetings = meetings.filter(meeting => new Date(meeting.datetime) > now);
+  const ongoingMeetings = meetings.filter(meeting => {
+    const start = new Date(meeting.datetime);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    return now >= start && now <= end;
+  });
 
   return (
     <div className="dashboard-container">
@@ -31,7 +35,7 @@ const Dashboard = () => {
       <Sidebar isOpen={isSidebarOpen} onMenuSelect={handleMenuSelect} ongoingMeetings={ongoingMeetings} />
       <main className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         {selectedMenu === 'home' && <Home onMeetingAdd={handleMeetingAdd} />}
-        {selectedMenu === 'meeting' && <MeetingShedule meetings={meetings} />}
+        {selectedMenu === 'meeting' && <MeetingSchedule meetings={meetings} />}
         {selectedMenu === 'profile' && <ProfileCard />}
       </main>
     </div>
