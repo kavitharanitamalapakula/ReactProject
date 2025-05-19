@@ -1,5 +1,3 @@
-// src/utils/fetchWithToken.js
-
 export const fetchWithToken = async (url, options = {}) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const token = userInfo?.token;
@@ -19,11 +17,10 @@ export const fetchWithToken = async (url, options = {}) => {
     try {
         const response = await fetch(url, finalOptions);
         const data = await response.json();
-
+        console.log(data)
         if (!response.ok) {
             throw new Error(data.message || "Request failed");
         }
-
         return data;
     } catch (error) {
         console.error("Fetch error:", error);

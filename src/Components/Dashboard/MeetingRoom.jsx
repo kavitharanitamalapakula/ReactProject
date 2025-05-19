@@ -39,37 +39,37 @@ function MeetingRoom() {
   const [remoteStreams, setRemoteStreams] = useState([]);
   const peerConnections = useRef({});
   const ws = useRef(null);
-  const toggleScreenSharing = async () => {
-    if (!localStream) return;
+  // const toggleScreenSharing = async () => {
+  //   if (!localStream) return;
 
-    if (!isScreenSharing) {
-      try {
-        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-        const screenTrack = screenStream.getVideoTracks()[0];
-        screenTrackRef.current = screenTrack;
-        Object.values(peerConnections.current).forEach((pc) => {
-          const sender = pc.getSenders().find(s => s.track.kind === 'video');
-          if (sender) {
-            sender.replaceTrack(screenTrack);
-          }
-        });
-        const newStream = new MediaStream([screenTrack, ...localStream.getAudioTracks()]);
-        if (webcamRef.current) {
-          webcamRef.current.srcObject = newStream;
-        }
+  //   if (!isScreenSharing) {
+  //     try {
+  //       const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+  //       const screenTrack = screenStream.getVideoTracks()[0];
+  //       screenTrackRef.current = screenTrack;
+  //       Object.values(peerConnections.current).forEach((pc) => {
+  //         const sender = pc.getSenders().find(s => s.track.kind === 'video');
+  //         if (sender) {
+  //           sender.replaceTrack(screenTrack);
+  //         }
+  //       });
+  //       const newStream = new MediaStream([screenTrack, ...localStream.getAudioTracks()]);
+  //       if (webcamRef.current) {
+  //         webcamRef.current.srcObject = newStream;
+  //       }
 
-        screenTrack.onended = () => {
-          stopScreenSharing();
-        };
+  //       screenTrack.onended = () => {
+  //         stopScreenSharing();
+  //       };
 
-        setIsScreenSharing(true);
-      } catch (err) {
-        console.error("Error starting screen sharing:", err);
-      }
-    } else {
-      stopScreenSharing();
-    }
-  };
+  //       setIsScreenSharing(true);
+  //     } catch (err) {
+  //       console.error("Error starting screen sharing:", err);
+  //     }
+  //   } else {
+  //     stopScreenSharing();
+  //   }
+  // };
 
   const stopScreenSharing = () => {
     if (!screenTrackRef.current) return;
@@ -100,7 +100,7 @@ function MeetingRoom() {
         if (webcamRef.current) {
           webcamRef.current.srcObject = stream;
         }
-        connectWebSocket();
+        // connectWebSocket();
       })
       .catch((error) => {
         setWebcamError(error.message || 'Error accessing webcam');
@@ -127,46 +127,46 @@ function MeetingRoom() {
     };
   }, []);
 
-  const connectWebSocket = () => {
-    ws.current = new WebSocket(SIGNALING_SERVER_URL);
+  // const connectWebSocket = () => {
+  //   ws.current = new WebSocket(SIGNALING_SERVER_URL);
 
-    ws.current.onopen = () => {
-      console.log('Connected to signaling server');
-      ws.current.send(JSON.stringify({ type: 'join', roomId }));
-    };
+  //   ws.current.onopen = () => {
+  //     console.log('Connected to signaling server');
+  //     ws.current.send(JSON.stringify({ type: 'join', roomId }));
+  //   };
 
-    ws.current.onmessage = async (message) => {
-      const data = JSON.parse(message.data);
-      const { from, type, payload } = data;
+  //   ws.current.onmessage = async (message) => {
+  //     const data = JSON.parse(message.data);
+  //     const { from, type, payload } = data;
 
-      if (from === ws.current.id) return; 
+  //     if (from === ws.current.id) return; 
 
-      switch (type) {
-        case 'offer':
-          await handleOffer(from, payload);
-          break;
-        case 'answer':
-          await handleAnswer(from, payload);
-          break;
-        case 'ice-candidate':
-          await handleIceCandidate(from, payload);
-          break;
-        case 'id':
-          ws.current.id = payload;
-          break;
-        default:
-          break;
-      }
-    };
+  //     switch (type) {
+  //       case 'offer':
+  //         await handleOffer(from, payload);
+  //         break;
+  //       case 'answer':
+  //         await handleAnswer(from, payload);
+  //         break;
+  //       case 'ice-candidate':
+  //         await handleIceCandidate(from, payload);
+  //         break;
+  //       case 'id':
+  //         ws.current.id = payload;
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   };
 
-    ws.current.onclose = () => {
-      console.log('Disconnected from signaling server');
-    };
+  //   ws.current.onclose = () => {
+  //     console.log('Disconnected from signaling server');
+  //   };
 
-    ws.current.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-  };
+  //   ws.current.onerror = (error) => {
+  //     console.error('WebSocket error:', error);
+  //   };
+  // };
 
   const createPeerConnection = (peerId) => {
     const pc = new RTCPeerConnection(ICE_SERVERS);
@@ -344,7 +344,7 @@ function MeetingRoom() {
         <button onClick={toggleVideo} className="control-button">
           {isVideoOn ? <FaVideo size={24} /> : <FaVideoSlash size={24} />}
         </button>
-        <button onClick={toggleScreenSharing} className="control-button">
+        {/* <button onClick={toggleScreenSharing} className="control-button">
           {isScreenSharing ? <FaPhoneSlash size={24} /> : <FaDesktop size={24} />}
         </button>
         <button onClick={handleShowRoomId} className="control-button">
@@ -352,7 +352,7 @@ function MeetingRoom() {
         </button>
         <button onClick={toggleChat} className="control-button">
           <FaComments size={24} />
-        </button>
+        </button> */}
       </div>
       {showChat && (
         <div className="chat-panel">

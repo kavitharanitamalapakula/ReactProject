@@ -9,13 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import { fetchWithToken } from '../../utils/fetchWithToken';
 
 const Base_Url = "http://localhost:5000/api/meetings";
+const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
 function NewMeetingPanel({ onMeetingAdd }) {
   const [showOptions, setShowOptions] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ title: '', description: '', datetime: null });
   const [errors, setErrors] = useState({});
-  const [showConfirmation, setShowConfirmation] = useState(false); 
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const panelRef = useRef(null);
   const navigate = useNavigate()
 
@@ -72,9 +73,12 @@ function NewMeetingPanel({ onMeetingAdd }) {
 
   const startInstantMeeting = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/meetingRoom/instant', {
+      const response = await fetch('http://localhost:5000/api/meetingRoom/instant-meeting', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userInfo.token}`
+        },
         body: JSON.stringify({ title: 'Instant Meeting' }),
       });
 
